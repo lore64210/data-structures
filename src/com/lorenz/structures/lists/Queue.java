@@ -1,8 +1,9 @@
 package com.lorenz.structures.lists;
 
 import com.lorenz.nodes.DoubleNode;
+import com.lorenz.nodes.Node;
 
-public class Queue<T> implements List<T> {
+public class Queue<T> extends List<T> {
 
   DoubleNode<T> first;
   DoubleNode<T> last;

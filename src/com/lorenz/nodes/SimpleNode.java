@@ -20,12 +20,10 @@ public class SimpleNode<T> implements Node<T> {
     this.value = (T) value;
   }
 
-  @Override
-  public Node<T> getRightNode() {
-    return rightNode;
+  public SimpleNode<T> getRightNode() {
+    return (SimpleNode<T>) rightNode;
   }
 
-  @Override
   public void setRightNode(Node<T> rightNode) {
     this.rightNode = rightNode;
   }

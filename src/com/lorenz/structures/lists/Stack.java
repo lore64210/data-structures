@@ -1,8 +1,9 @@
 package com.lorenz.structures.lists;
 
 import com.lorenz.nodes.DoubleNode;
+import com.lorenz.nodes.Node;
 
-public class Stack<T> implements List<T> {
+public class Stack<T> extends List<T> {
 
   Integer size;
   DoubleNode<T> first;

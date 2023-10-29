@@ -1,13 +1,20 @@
 package com.lorenz.structures.lists;
 
-public interface List<T> {
+import com.lorenz.nodes.Node;
 
-  boolean isEmpty();
+public abstract class List<T> {
 
-  Integer getSize();
+  Node<T> first;
+  abstract boolean isEmpty();
 
-  void push(T value);
+  abstract Integer getSize();
 
-  T pop();
+  abstract void push(T value);
+
+  abstract T pop();
+
+  protected Node<T> getFirstNode() {
+    return this.first;
+  };
 
 }

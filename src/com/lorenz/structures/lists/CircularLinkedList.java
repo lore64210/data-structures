@@ -1,8 +1,9 @@
 package com.lorenz.structures.lists;
 
+import com.lorenz.nodes.Node;
 import com.lorenz.nodes.SimpleNode;
 
-public class CircularLinkedList<T> implements List<T> {
+public class CircularLinkedList<T> extends List<T> {
 
     private SimpleNode<T> first;
     private SimpleNode<T> last;

@@ -6,4 +6,6 @@ public interface Node<T> {
 
   void setValue(T value);
 
+  Node<T> getRightNode();
+
 }

@@ -42,11 +42,11 @@ public class AVLNode<T> implements Node<T> {
     return leftNode;
   }
 
-  public void setRightNode(AVLNode<T> node) {
-    rightNode = node;
+  public void setRightNode(Node<T> node) {
+    rightNode = (AVLNode<T>) node;
   }
 
-  public void setLeftNode(AVLNode<T> node) {
-    leftNode = node;
+  public void setLeftNode( Node<T> node) {
+    leftNode = (AVLNode<T>) node;
   }
 }

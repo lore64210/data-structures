@@ -18,8 +18,8 @@ public class DoubleNode<T> implements Node<T> {
     return leftNode;
   }
 
-  public void setRightNode(DoubleNode<T> rightNode) {
-    this.rightNode = rightNode;
+  public void setRightNode(Node<T> rightNode) {
+    this.rightNode = (DoubleNode<T>)rightNode;
   }
 
   public DoubleNode<T> getRightNode() {

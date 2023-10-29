@@ -2,37 +2,81 @@ package com.lorenz.structures.lists;
 
 import com.lorenz.nodes.SimpleNode;
 
-import java.util.NoSuchElementException;
-
-public class LinkedList<T> implements List<T> {
+public class LinkedList<T> extends List<T> {
 
   private SimpleNode<T> first;
   private SimpleNode<T> last;
-  private Integer size;
-  private Iterator iterator;
+  protected Integer size;
+  private final Iterator<T, LinkedList<T>, SimpleNode<T>> iterator;
 
   public LinkedList() {
     size = 0;
     first = null;
     last = null;
-    iterator = new Iterator(this);
+    iterator = new Iterator<>(this);
   }
 
   public LinkedList(T value) {
     size = 1;
     first = new SimpleNode<>(value);
     last = first;
-    iterator = new Iterator(this);
+    iterator = new Iterator<>(this);
   }
 
   public LinkedList(LinkedList<T> list) {
     size = list.getSize();
     first = list.getNode(0);
     last = list.getNode(size);
-    iterator = new Iterator(this);
+    iterator = new Iterator<>(this);
   }
 
-  private SimpleNode<T> getNode(Integer position) {
+  public Integer getPositionOf(T value) {
+    this.iterator.setCurrentNode(this.first);
+    int position = -1;
+    int currentPosition = 0;
+    do {
+      SimpleNode<T> current = (SimpleNode<T>) iterator.next();
+      if (current.getValue().equals(value)) {
+        position = currentPosition;
+        break;
+      }
+      currentPosition++;
+    } while(this.iterator.hasNext());
+    this.iterator.setCurrentNode(this.first);
+    return position;
+  }
+
+  public void delete(T value) {
+    this.iterator.setCurrentNode(this.first);
+    int currentPosition = 0;
+    do {
+      SimpleNode<T> current = (SimpleNode<T>)iterator.next();
+      if (current.getValue().equals(value)) {
+        this.delete(currentPosition);
+        break;
+      }
+      currentPosition++;
+    } while(this.iterator.hasNext());
+    this.iterator.setCurrentNode(this.first);
+  }
+
+  public void delete(int position) {
+    SimpleNode<T> current = getNode(position);
+    if (position == 0) {
+      this.first = current.getRightNode();
+      current.setRightNode(null);
+    } else if (position == this.size - 1) {
+      SimpleNode<T> leftNode = getNode(position - 1);
+      leftNode.setRightNode(null);
+      this.last = leftNode;
+    } else {
+      SimpleNode<T> leftNode = getNode(position - 1);
+      leftNode.setRightNode(current.getRightNode());
+    }
+    this.size--;
+  }
+
+  protected SimpleNode<T> getNode(Integer position) {
     if (isEmpty() || position < 0) {
       throw new IllegalArgumentException("La posicion no existe");
     }
@@ -122,40 +166,20 @@ public class LinkedList<T> implements List<T> {
       throw new IllegalArgumentException("La lista esta vacia");
     }
     T value = last.getValue();
-    last = getNode(size - 1);
+    SimpleNode<T> newLast = getNode(size - 1);
+    newLast.setRightNode(null);
+    last = newLast;
     size--;
     return value;
   }
 
   public boolean hasNext() {
-    return iterator.hasNext();
+    return this.iterator.hasNext();
   }
 
   public T next() {
-    return iterator.next().getValue();
+    return this.iterator.next().getValue();
   }
 
-  private class Iterator {
-    private SimpleNode<T> currentNode;
-
-    public Iterator(LinkedList<T> linkedList) {
-      currentNode = linkedList.first;
-    }
-
-    public void setCurrentNode(SimpleNode<T> currentNode) {
-      this.currentNode = currentNode;
-    }
-
-    public boolean hasNext() {
-      return currentNode != null;
-    }
-
-    public SimpleNode<T> next() {
-      if (!hasNext()) throw new NoSuchElementException("La lista no contiene mas elementos");
-      SimpleNode<T> node = currentNode;
-      currentNode = currentNode.getRightNode();
-      return node;
-    }
-  }
 
 }
